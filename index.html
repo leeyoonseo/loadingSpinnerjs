@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Loading Spinner - boxShadow, keyframes 활용</title>
+</head>
+<style>
+    button{
+        position: relative;
+        z-index:99999999;
+    }
+</style>
+<body>
+    <button type="button" id="show">Show</button>
+    <button type="button" id="hide">Hide</button>
+    <button type="button" id="remove">Remove</button>
+
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script src="./loadingSpinner.js"></script>
+
+    <script>
+    var loader = new progressBar.LoadingSpinner();
+
+    $('#show').on('click', function(){
+        loader.show();
+    });
+
+    $('#hide').on('click', function(){
+        loader.hide();
+    });
+
+    $('#remove').on('click', function(){
+        loader.remove();
+    });
+</script>
+</body>
+</html>
