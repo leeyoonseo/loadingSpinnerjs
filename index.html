@@ -4,39 +4,481 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Loading Spinner - boxShadow, keyframes 활용</title>
+    <title>Loading Spinner</title>
 </head>
 <style>
-    button{
+    body.on .title{
+        color:#fff;
+    }
+    .btn_box{
+        padding:20px;
         position: relative;
         z-index:99999999;
     }
+    .btn_box + .btn_box{
+        border-top:1px solid #333;
+    }
+
+/* 원본 keyframes
+@keyframes loaderSpinner{
+  0%,
+  100% {  
+    box-shadow:
+        0em -2.823em 0em 0em #1ba1f8,
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em #89d0ff;
+  }
+  8.3% {
+    box-shadow: 
+        0em -2.823em 0em 0em #89d0ff,
+        1.403em -2.435em 0 0em #1ba1f8,
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.5);
+  }
+  16.6% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.5),
+        1.403em -2.435em 0 0em #89d0ff,
+        2.435em -1.403em 0 0em #1ba1f8, 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  25% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.5),
+        2.435em -1.403em 0 0em #89d0ff, 
+        2.806em 0em 0 0em #1ba1f8,
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);  
+  }
+  33.3% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.5), 
+        2.806em 0em 0 0em #89d0ff,
+        2.419em 1.403em 0 0em #1ba1f8,
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  41.6% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.5),
+        2.419em 1.403em 0 0em #89d0ff,
+        1.387em 2.435em 0 0em #1ba1f8, 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  50% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.5),
+        1.387em 2.435em 0 0em #89d0ff, 
+        
+        -0.016em 2.806em 0 0em #1ba1f8,
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  58.3% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.5), 
+        
+        -0.016em 2.806em 0 0em #89d0ff,
+        -1.419em 2.419em 0 0em #1ba1f8, 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  66.6% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.5),
+        -1.419em 2.419em 0 0em #89d0ff, 
+        -2.452em 1.387em 0 0em #1ba1f8,
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2); 
+  }
+  75% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.5), 
+        -2.452em 1.387em 0 0em #89d0ff,
+        -2.823em -0.016em 0 0em #1ba1f8, 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2); 
+  }
+  83.3% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.5),
+        -2.823em -0.016em 0 0em #89d0ff, 
+        -2.435em -1.419em 0 0em #1ba1f8, 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2); 
+  }
+  91.6% {
+    box-shadow: 
+    0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.5), 
+        -2.435em -1.419em 0 0em #89d0ff, 
+        -1.403em -2.452em 0 0em #1ba1f8;
+  }
+}
+
+@-webkit-keyframes loaderSpinner{
+  0%,
+  100% {  
+    box-shadow:
+        0em -2.823em 0em 0em #1ba1f8,
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em #89d0ff;
+  }
+  8.3% {
+    box-shadow: 
+        0em -2.823em 0em 0em #89d0ff,
+        1.403em -2.435em 0 0em #1ba1f8,
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.5);
+  }
+  16.6% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.5),
+        1.403em -2.435em 0 0em #89d0ff,
+        2.435em -1.403em 0 0em #1ba1f8, 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  25% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.5),
+        2.435em -1.403em 0 0em #89d0ff, 
+        2.806em 0em 0 0em #1ba1f8,
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);  
+  }
+  33.3% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.5), 
+        2.806em 0em 0 0em #89d0ff,
+        2.419em 1.403em 0 0em #1ba1f8,
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  41.6% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.5),
+        2.419em 1.403em 0 0em #89d0ff,
+        1.387em 2.435em 0 0em #1ba1f8, 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  50% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.5),
+        1.387em 2.435em 0 0em #89d0ff, 
+        
+        -0.016em 2.806em 0 0em #1ba1f8,
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  58.3% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.5), 
+        
+        -0.016em 2.806em 0 0em #89d0ff,
+        -1.419em 2.419em 0 0em #1ba1f8, 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2);
+  }
+  66.6% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.5),
+        -1.419em 2.419em 0 0em #89d0ff, 
+        -2.452em 1.387em 0 0em #1ba1f8,
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.2), 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2); 
+  }
+  75% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.5), 
+        -2.452em 1.387em 0 0em #89d0ff,
+        -2.823em -0.016em 0 0em #1ba1f8, 
+        -2.435em -1.419em 0 0em rgba(255,255,255,0.2), 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2); 
+  }
+  83.3% {
+    box-shadow: 
+        0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.5),
+        -2.823em -0.016em 0 0em #89d0ff, 
+        -2.435em -1.419em 0 0em #1ba1f8, 
+        -1.403em -2.452em 0 0em rgba(255,255,255,0.2); 
+  }
+  91.6% {
+    box-shadow: 
+    0em -2.823em 0em 0em rgba(255,255,255,0.2),
+        1.403em -2.435em 0 0em rgba(255,255,255,0.2),
+        2.435em -1.403em 0 0em rgba(255,255,255,0.2), 
+        2.806em 0em 0 0em rgba(255,255,255,0.2),
+        2.419em 1.403em 0 0em rgba(255,255,255,0.2),
+        1.387em 2.435em 0 0em rgba(255,255,255,0.2), 
+        
+        -0.016em 2.806em 0 0em rgba(255,255,255,0.2),
+        -1.419em 2.419em 0 0em rgba(255,255,255,0.2), 
+        -2.452em 1.387em 0 0em rgba(255,255,255,0.2),
+        -2.823em -0.016em 0 0em rgba(255,255,255,0.5), 
+        -2.435em -1.419em 0 0em #89d0ff, 
+        -1.403em -2.452em 0 0em #1ba1f8;
+  }
+} */
 </style>
 <body>
-    <button type="button" id="show">Show</button>
-    <button type="button" id="hide">Hide</button>
-    <button type="button" id="remove">Remove</button>
+    <div class="btn_box">
+        <p class="title">non-customized</p>
+        <button type="button" id="non_show">show</button>
+        <button type="button" id="non_hide">hide</button>
+        <button type="button" id="non_remove">remove</button>
+    </div>
 
-    <script
-    src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-    crossorigin="anonymous"></script>
-    <script src="./loadingSpinner.js"></script>
+    <div class="btn_box">
+        <p class="title">customized</p>
+        <button type="button" id="show">show</button>
+        <button type="button" id="hide">hide</button>
+        <button type="button" id="remove">remove</button>
+    </div>
+<script
+src="https://code.jquery.com/jquery-3.4.1.min.js"
+integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+crossorigin="anonymous"></script>
+<script src="./loadingSpinner.js"></script>
+<script>
 
-    <script>
-    var loader = new progressBar.LoadingSpinner();
-
-    $('#show').on('click', function(){
-        loader.show();
-    });
-
-    $('#hide').on('click', function(){
-        loader.hide();
-    });
-
-    $('#remove').on('click', function(){
-        loader.remove();
-    });
-</script>
-</body>
-</html>
+        // 1. 중복 호출 시 앞 서 호출 된 객체는 삭제됨
+        // 2. className 추가 시 각 각 생성
+        var defaultLoader = LoadingIndicator();
+        var customLoader = LoadingIndicator({
+            className : 'custom_loader', 
+            message : '로딩 중...',
+            dim : false
+        });
+    
+        function toggleClass(isState){
+            if(isState){
+                $('body').addClass('on');
+            
+            }else{
+                $('body').removeClass('on');
+            }
+        }
+    
+        // non-customized ---------------------- 
+        $('#non_show').on('click', function(){
+            toggleClass(true);
+            defaultLoader.show();
+        });
+    
+        $('#non_hide').on('click', function(){
+            toggleClass(false);
+            defaultLoader.hide();
+        });
+    
+        $('#non_remove').on('click', function(){
+            toggleClass(false);
+            defaultLoader.remove();
+        });
+    
+        // customized ---------------------- 
+        $('#show').on('click', function(){
+            customLoader.show();
+        });
+    
+        $('#hide').on('click', function(){
+            customLoader.hide();
+        });
+    
+        $('#remove').on('click', function(){
+            customLoader.remove();
+        });
+    </script>
+    </body>
+    </html>

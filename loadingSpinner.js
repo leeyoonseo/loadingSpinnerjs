@@ -1,55 +1,70 @@
-window.progressBar = {
-    name : "progress bar draw",
-    version : "1.0.0",
-};
-
-
-progressBar.LoadingSpinner = function(options){
-    this.name = 'progressBarDraw.Spinner';
+/**
+ * Loading indicator
+ * @author Lee Yoon Seo (2019.11.20)
+ * @version 1.0.0
+ * @return {Object} show, hide, remove
+ * @param {Object} options
+ * @usage 
+ * <pre>
+ *      // non-customized 
+ *      var loader = LoadingIndicator();      
+ * 
+ *      // customized
+ *      var loader = LoadingIndicator({
+ *          className : 'progress',
+ *          message : '로딩중...',
+ *          dim : false
+ *      });
+ * 
+ *      loader.show();
+ *      loader.hide();    
+ *      loader.remove();  
+ * </pre>
+ * @support 
+ */
+window.LoadingIndicator = function(options){
 
     var options = $.extend(true, {
         className : 'loader',
         message : '파일 업로드 중입니다.',
+        mainColor : '#1ba1f8',
+        subColor : '#89d0ff',
+        defaultColor : '#616161',
         dim : true
-
     }, options);
+    
+    options.defaultColor = (options.dim) ? options.defaultColor : 'rgba(0,0,0,0.2)';
 
-    var keyframes = '@keyframes loaderSpinner{0%,100%{box-shadow:0 -2.7em 0 0 #1ba1f8,1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.3),-1.4em -2.4em 0 0 #89d0ff}8.3%{box-shadow:0 -2.7em 0 0 #89d0ff,1.4em -2.4em 0 0 #1ba1f8,2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.3)}16.6%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.3),1.4em -2.4em 0 0 #89d0ff,2.4em -1.4em 0 0 #1ba1f8,2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}25%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.3),2.4em -1.4em 0 0 #89d0ff,2.7em 0 0 0 #1ba1f8,2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}33.3%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.3),2.7em 0 0 0 #89d0ff,2.4em 1.4em 0 0 #1ba1f8,1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}41.6%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.3),2.4em 1.4em 0 0 #89d0ff,1.4em 2.4em 0 0 #1ba1f8,0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}50%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.3),1.4em 2.4em 0 0 #89d0ff,0 2.7em 0 0 #1ba1f8,-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}58.3%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.3),0 2.7em 0 0 #89d0ff,-1.4em 2.4em 0 0 #1ba1f8,-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}66.6%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.3),-1.4em 2.4em 0 0 #89d0ff,-2.4em 1.4em 0 0 #1ba1f8,-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}75%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.3),-2.4em 1.4em 0 0 #89d0ff,-2.7em 0 0 0 #1ba1f8,-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}83.3%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.3),-2.7em 0 0 0 #89d0ff,-2.4em -1.4em 0 0 #1ba1f8,-1.4em -2.4em 0 0 rgba(255,255,255,.2)}91.6%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.3),-2.4em -1.4em 0 0 #89d0ff,-1.4em -2.4em 0 0 #1ba1f8}}@-webkit-keyframes loaderSpinner{0%,100%{box-shadow:0 -2.7em 0 0 #1ba1f8,1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.3),-1.4em -2.4em 0 0 #89d0ff}8.3%{box-shadow:0 -2.7em 0 0 #89d0ff,1.4em -2.4em 0 0 #1ba1f8,2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.3)}16.6%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.3),1.4em -2.4em 0 0 #89d0ff,2.4em -1.4em 0 0 #1ba1f8,2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}25%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.3),2.4em -1.4em 0 0 #89d0ff,2.7em 0 0 0 #1ba1f8,2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}33.3%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.3),2.7em 0 0 0 #89d0ff,2.4em 1.4em 0 0 #1ba1f8,1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}41.6%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.3),2.4em 1.4em 0 0 #89d0ff,1.4em 2.4em 0 0 #1ba1f8,0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}50%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.3),1.4em 2.4em 0 0 #89d0ff,0 2.7em 0 0 #1ba1f8,-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}58.3%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.3),0 2.7em 0 0 #89d0ff,-1.4em 2.4em 0 0 #1ba1f8,-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}66.6%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.3),-1.4em 2.4em 0 0 #89d0ff,-2.4em 1.4em 0 0 #1ba1f8,-2.7em 0 0 0 rgba(255,255,255,.2),-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}75%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.3),-2.4em 1.4em 0 0 #89d0ff,-2.7em 0 0 0 #1ba1f8,-2.4em -1.4em 0 0 rgba(255,255,255,.2),-1.4em -2.4em 0 0 rgba(255,255,255,.2)}83.3%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.3),-2.7em 0 0 0 #89d0ff,-2.4em -1.4em 0 0 #1ba1f8,-1.4em -2.4em 0 0 rgba(255,255,255,.2)}91.6%{box-shadow:0 -2.7em 0 0 rgba(255,255,255,.2),1.4em -2.4em 0 0 rgba(255,255,255,.2),2.4em -1.4em 0 0 rgba(255,255,255,.2),2.7em 0 0 0 rgba(255,255,255,.2),2.4em 1.4em 0 0 rgba(255,255,255,.2),1.4em 2.4em 0 0 rgba(255,255,255,.2),0 2.7em 0 0 rgba(255,255,255,.2),-1.4em 2.4em 0 0 rgba(255,255,255,.2),-2.4em 1.4em 0 0 rgba(255,255,255,.2),-2.7em 0 0 0 rgba(255,255,255,.3),-2.4em -1.4em 0 0 #89d0ff,-1.4em -2.4em 0 0 #1ba1f8}}';
+    var wrapEl, 
+        loaderEl, 
+        messageEl, 
+        dimEl,
+        className = options.className,
+        wrapClass = className + '_wrap',
+        messageClass = className + '_message',
+        dimClass = className + '_dim',
+        styleSheetId = options.className + 'Style';
 
-    this.setKeyFrames = function(){
-        var styleEl = $('<style></style>', { 
-            id : options.className + 'style'
-        }).html(keyframes);
+    var keyframes = '@keyframes loaderSpinner{0%,100%{box-shadow:0 -2.823em 0 0 ' + options.mainColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.subColor+ '}8.3%{box-shadow:0 -2.823em 0 0 ' + options.subColor+ ',1.403em -2.435em 0 0 ' + options.mainColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}16.6%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.subColor+ ',2.435em -1.403em 0 0 ' + options.mainColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}25%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.subColor+ ',2.806em 0 0 0 ' + options.mainColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}33.3%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.subColor+ ',2.419em 1.403em 0 0 ' + options.mainColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}41.6%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.subColor+ ',1.387em 2.435em 0 0 ' + options.mainColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}50%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.subColor+ ',-.016em 2.806em 0 0 ' + options.mainColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}58.3%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.subColor+ ',-1.419em 2.419em 0 0 ' + options.mainColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}66.6%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.subColor+ ',-2.452em 1.387em 0 0 ' + options.mainColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}75%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.subColor+ ',-2.823em -.016em 0 0 ' + options.mainColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}83.3%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.subColor+ ',-2.435em -1.419em 0 0 ' + options.mainColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}91.6%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.subColor+ ',-1.403em -2.452em 0 0 ' + options.mainColor + '}}@-webkit-keyframes loaderSpinner{0%,100%{box-shadow:0 -2.823em 0 0 ' + options.mainColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.subColor+ '}8.3%{box-shadow:0 -2.823em 0 0 ' + options.subColor+ ',1.403em -2.435em 0 0 ' + options.mainColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}16.6%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.subColor+ ',2.435em -1.403em 0 0 ' + options.mainColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}25%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.subColor+ ',2.806em 0 0 0 ' + options.mainColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}33.3%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.subColor+ ',2.419em 1.403em 0 0 ' + options.mainColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}41.6%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.subColor+ ',1.387em 2.435em 0 0 ' + options.mainColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}50%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.subColor+ ',-.016em 2.806em 0 0 ' + options.mainColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}58.3%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.subColor+ ',-1.419em 2.419em 0 0 ' + options.mainColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}66.6%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.subColor+ ',-2.452em 1.387em 0 0 ' + options.mainColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}75%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.subColor+ ',-2.823em -.016em 0 0 ' + options.mainColor + ',-2.435em -1.419em 0 0 ' + options.defaultColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}83.3%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.subColor+ ',-2.435em -1.419em 0 0 ' + options.mainColor + ',-1.403em -2.452em 0 0 ' + options.defaultColor + '}91.6%{box-shadow:0 -2.823em 0 0 ' + options.defaultColor + ',1.403em -2.435em 0 0 ' + options.defaultColor + ',2.435em -1.403em 0 0 ' + options.defaultColor + ',2.806em 0 0 0 ' + options.defaultColor + ',2.419em 1.403em 0 0 ' + options.defaultColor + ',1.387em 2.435em 0 0 ' + options.defaultColor + ',-.016em 2.806em 0 0 ' + options.defaultColor + ',-1.419em 2.419em 0 0 ' + options.defaultColor + ',-2.452em 1.387em 0 0 ' + options.defaultColor + ',-2.823em -.016em 0 0 ' + options.defaultColor + ',-2.435em -1.419em 0 0 ' + options.subColor+ ',-1.403em -2.452em 0 0 ' + options.mainColor + '}}';
 
-        $('head').append(styleEl);
+    function init(){
+        // [D] 중복 시 먼저 생성한 것 삭제
+        if($('body').find('.' + dimClass).length > 0){
+            remove();
+        }
+
+        createElement();
+        appendElement();
     }
 
-    this.init = function(){
-        var styleEl = $('#' + options.className + 'style');
-        if(styleEl.length < 1) this.setKeyFrames();
-        
-        this.draw();
-        this.appendElement();
-    };
+    function createElement(){
+        wrapEl = $('<div></div>', { 
+            class : wrapClass
 
-    this.draw = function(){
-
-        this.wrap = $('<div></div>', { 
-            class : options.className + '_wrap'
-
-        }).css({
-            'position' : 'absolute',
-            'top' : '0',
-            'left' : '0',
-            'bottom' : '0',
-            'right' : '0',
-            'margin' : 'auto',
-            'width' : '155px',
-            'height' : '115px'
         });
 
-        this.element = $('<div></div>', { 
-            class : options.className 
+        loaderEl = $('<div></div>', { 
+            class : className
 
         }).css({
             'margin' : '38px auto 43px',
@@ -65,69 +80,87 @@ progressBar.LoadingSpinner = function(options){
         });
 
         if(options.message){
-            this.message = $('<p></p>', { 
-                class : options.className + '_message'
+            messageEl = $('<p></p>', { 
+                class : messageClass
 
             }).css({
                 'margin' : '0',
+                'maxWidth' : '300px',
                 'fontSize' : '14px',
-                'color' : '#fff',
+                'color' : (options.dim) ? '#fff' : '#333',
                 'textAlign' : 'center'
 
             }).text(options.message);
         }
 
+        
+        dimEl = $('<div></div>', { 
+            class : dimClass
+
+        }).css({
+            'zIndex' : '999',
+            'display' : 'none',
+            'position' : 'fixed',
+            'left' : '0',
+            'right' : '0',
+            'top' : '0',
+            'bottom' : '0',
+            'justifyContent' : 'center',
+            'alignItems' : 'center'
+        });;
+        
         if(options.dim){
-            this.dim = $('<div></div>', { 
-                class : options.className + '_dim'
+            dimEl.css({
+                'background' : 'rgba(0,0,0,0.75)'
+            })
 
-            }).css({
-                'display' : 'none',
-                'position' : 'fixed',
-                'left' : '0',
-                'right' : '0',
-                'top' : '0',
-                'bottom' : '0',
-                'zIndex' : '999',
-                'background' : 'rgba(0,0,0,0.5)' 
-            });;
         }
-    };
-
-    this.appendElement = function(){
-        this.wrap.append(this.element);
-
-        if(options.message){
-            this.wrap.append(this.message);
-        }
-
-        if(options.dim){
-            this.dim.append(this.wrap);
-            this.wrap = this.dim;
-        }
-
-        $('body').append(this.wrap);
     }
 
-    this.show = function(){
-        $(this.wrap).show();
-    };
+    function appendElement(){
+        wrapEl.append(loaderEl);
 
-    this.hide = function(){
-        $(this.wrap).hide();
+        // 메세지
+        if(options.message) wrapEl.append(messageEl);
+
+        // 스타일
+        if($(styleSheetId).length < 1) $('head').append(setStyleEl());
+
+        // 배경
+        dimEl.append(wrapEl);
+
+        $('body').append(dimEl);
     }
 
-    this.remove = function(){
-        $('body').find(this.wrap).remove();
-        $('#' + options.className + 'style').remove();
+    function setStyleEl(){
+        return $('<style></style>', { 
+            id : styleSheetId
+
+        }).html(keyframes);        
     }
 
-    this.init();
+    function show(){
+        if($('body').find('.' + dimClass).length < 1){
+            init();
+        }
+
+        $(dimEl).css('display', 'flex');
+    }
+    
+    function hide(){
+        $(dimEl).hide();
+    }
+
+    function remove(){
+        $('body').find('.' + dimClass).remove();
+        $('#' + styleSheetId).remove();
+    }
+
+    init();
 
     return{
-        wrap : this.wrap,
-        show : this.show,
-        hide : this.hide,
-        remove : this.remove,
+        show : show,
+        hide : hide,
+        remove : remove
     }
 };
