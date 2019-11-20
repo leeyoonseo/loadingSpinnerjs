@@ -22,6 +22,8 @@
  * </pre>
  * @support 
  */
+'use strict';
+
 window.LoadingIndicator = function(options){
 
     var options = $.extend(true, {
